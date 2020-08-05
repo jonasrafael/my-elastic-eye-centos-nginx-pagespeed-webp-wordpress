@@ -83,20 +83,15 @@ configure arguments: --prefix=/etc/nginx --sbin-path=/usr/sbin/nginx --modules-p
 
 
 
-#Config your database to receive biggest files;
-
-
+# Config your database to receive biggest files;
 db mysql -u root -p yourdatabase <
 
-
-#my.cnf
+--> Update the my.cnf
 max_allowed_packet=64M
 
-#nginx settings
-
-#atualiza php 7.4
-https://srv.concorrencia.net:10000/package-updates/?xnavigation=1
-Habilita o remi 7,4
+# Uptate to php 7.4
+https://srv.jonasrafael.com:10000/package-updates/?xnavigation=1
+# Enable just the REMI 74.
 
 wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 wget https://rpms.remirepo.net/enterprise/remi-release-7.rpm
@@ -108,11 +103,7 @@ sudo apt install php7.4-curl php7.4-mbstring php7.4-bz2 php7.4-readline php7.4-i
 sudo apt install php7.4-bcmath php7.4-bz2 php7.4-curl php7.4-intl php7.4-mbstring php7.4-mysql php7.4-readline php7.4-xml php7.4-zip`
 
 
-
-
-
-
-Remover versos antigas
+# Remove Old Versions of PHP
 yum list installed | grep php
 yum remove -y php72*
 
@@ -122,57 +113,20 @@ yum install php-imagick
 yum install php-soap
 
 
-Instalar modulo
-https://github.com/SatelliteWP/rocket-nginx
+# Wp-Rocket NGinx
+- https://github.com/SatelliteWP/rocket-nginx
 sudo nano /etc/nginx/nginx.conf
     client_max_body_size 100M;
 
 * sudo yum install libwebp-tools
 Yum install optipng & jpegoptim
 
-—— webp
+# Web P
 https://wpspeedmatters.com/serve-webp-in-wordpress/
 https://wordpress.org/plugins/webp-express/#%0Ai%20am%20on%20nginx%20or%20openresty%0A
 
 yum install php-pecl-zip
 
-# Nginx WordPress Configurations
-In the files;
-
-
-sudo yum install fail2ban
-
-
-[root@srv 04]# iptables -A INPUT –p tcp –m state --state NEW –j DROP
-[root@srv 04]# iptables -A INPUT -p tcp -m state --state NEW -m limit --limit 2/second --limit-burst 2 -j ACCEPT
-[root@srv 04]# iptables -A INPUT -p icmp -m limit --limit 2/second --limit-burst 2 -j ACCEPT
-[root@srv 04]# iptables -A INPUT -p tcp --tcp-flags ALL FIN,PSH,URG -j DROP
-
-
-Avançado:
-https://linoxide.com/linux-how-to/install-logrotate-configure-nginx-log-rotation/
-Log rotation
-https://www.obstance.com/web/using-logrotate-to-rotate-php5-fpm-logs
-
-
-
-Leer
-https://iserversupport.com/how-to-install-nginx-php-fpm-mysql-with-pagespeed-and-memcached-for-high-performance/?__cf_chl_jschl_tk__=d7c28cfbdbcf62c70b33d1876ba2b3407378c89b-1596567116-0-ATEiaiVFy4HVJBCVg4UHPK2B7nI-dQ2sYedRMEdn3rBwngNc5JVxdLOUAB_WgNRlb0vhruPIyxDBwFQeEjkA_GDW64HZUfeVIsnEIEfNatVvgzfSsu8n62GGK2CJrtCazDNh37BH55hMR4JBr6HTnn7x9kHlkLw9dhVa5DtTsM-aL7Dm5F0kXACxOaYRI8OAAuprnyjjTZMwRuH0eu5abADq90rkjTXoEIq_U4IoqJZrYeEcAQC1qYddPrk4c5Wg_F9T-wOha2pS-PEkM3hdC6zDzCjWfDS5idRQB6kk2yhjhX2Kuznzwv6lX6lz12-GBr-UdOY1X-m52kWYsND3Y9yieGXzC8jgXva6_oIRylIqa60JHqrJ2U-i_QPx3CwZQ8a4hVKPFgwoy9HM8BGn-Jg
-
-
-
-wordfence
-* 
-sudo iptables -t filter -A INPUT -p tcp --dport 443 -j ACCEPT
-
-sudo iptables -t filter -A OUTPUT -p tcp --dport 443 -j ACCEPT
-
-
-
-
-Apagar Caches
-touch /var/ngx_pagespeed_cache/cache.flush
-nginx -V 2>&1 | grep nginx-cache-purge -o
 
 ## How to use
 * Pick a /conf.d file and mix to taste. Check for #TODO for `example.com` fields that need editing.
@@ -181,40 +135,33 @@ nginx -V 2>&1 | grep nginx-cache-purge -o
 * `sudo systemctl reload nginx`
 * You're live.
 
-## In progress
-Still working on nailing down logging, rate limiting, and a few other settings. Feel free to leave tips, suggestions, and pull requests.
-
-
+# Prevent Attacks
+ 
 sudo yum install fail2ban
 
+iptables -A INPUT –p tcp –m state --state NEW –j DROP
+iptables -A INPUT -p tcp -m state --state NEW -m limit --limit 2/second --limit-burst 2 -j ACCEPT
+iptables -A INPUT -p icmp -m limit --limit 2/second --limit-burst 2 -j ACCEPT
+iptables -A INPUT -p tcp --tcp-flags ALL FIN,PSH,URG -j DROP
 
-[root@srv 04]# iptables -A INPUT –p tcp –m state --state NEW –j DROP
-[root@srv 04]# iptables -A INPUT -p tcp -m state --state NEW -m limit --limit 2/second --limit-burst 2 -j ACCEPT
-[root@srv 04]# iptables -A INPUT -p icmp -m limit --limit 2/second --limit-burst 2 -j ACCEPT
-[root@srv 04]# iptables -A INPUT -p tcp --tcp-flags ALL FIN,PSH,URG -j DROP
+
+# Read Also
+
+- https://iserversupport.com/how-to-install-nginx-php-fpm-mysql-with-pagespeed-and-memcached-for-high-performance/?__cf_chl_jschl_tk__=d7c28cfbdbcf62c70b33d1876ba2b3407378c89b-1596567116-0-ATEiaiVFy4HVJBCVg4UHPK2B7nI-dQ2sYedRMEdn3rBwngNc5JVxdLOUAB_WgNRlb0vhruPIyxDBwFQeEjkA_GDW64HZUfeVIsnEIEfNatVvgzfSsu8n62GGK2CJrtCazDNh37BH55hMR4JBr6HTnn7x9kHlkLw9dhVa5DtTsM-aL7Dm5F0kXACxOaYRI8OAAuprnyjjTZMwRuH0eu5abADq90rkjTXoEIq_U4IoqJZrYeEcAQC1qYddPrk4c5Wg_F9T-wOha2pS-PEkM3hdC6zDzCjWfDS5idRQB6kk2yhjhX2Kuznzwv6lX6lz12-GBr-UdOY1X-m52kWYsND3Y9yieGXzC8jgXva6_oIRylIqa60JHqrJ2U-i_QPx3CwZQ8a4hVKPFgwoy9HM8BGn-Jg
 
 
-Avançado:
+
+# Wordfence Adjusts on Iptables
+sudo iptables -t filter -A INPUT -p tcp --dport 443 -j ACCEPT
+sudo iptables -t filter -A OUTPUT -p tcp --dport 443 -j ACCEPT
+
+## In progress
+
+# Advanced - Log Rotation:
 https://linoxide.com/linux-how-to/install-logrotate-configure-nginx-log-rotation/
-Log rotation
 https://www.obstance.com/web/using-logrotate-to-rotate-php5-fpm-logs
 
 
-
-Leer
-https://iserversupport.com/how-to-install-nginx-php-fpm-mysql-with-pagespeed-and-memcached-for-high-performance/?__cf_chl_jschl_tk__=d7c28cfbdbcf62c70b33d1876ba2b3407378c89b-1596567116-0-ATEiaiVFy4HVJBCVg4UHPK2B7nI-dQ2sYedRMEdn3rBwngNc5JVxdLOUAB_WgNRlb0vhruPIyxDBwFQeEjkA_GDW64HZUfeVIsnEIEfNatVvgzfSsu8n62GGK2CJrtCazDNh37BH55hMR4JBr6HTnn7x9kHlkLw9dhVa5DtTsM-aL7Dm5F0kXACxOaYRI8OAAuprnyjjTZMwRuH0eu5abADq90rkjTXoEIq_U4IoqJZrYeEcAQC1qYddPrk4c5Wg_F9T-wOha2pS-PEkM3hdC6zDzCjWfDS5idRQB6kk2yhjhX2Kuznzwv6lX6lz12-GBr-UdOY1X-m52kWYsND3Y9yieGXzC8jgXva6_oIRylIqa60JHqrJ2U-i_QPx3CwZQ8a4hVKPFgwoy9HM8BGn-Jg
-
-
-
-wordfence
-* 
-sudo iptables -t filter -A INPUT -p tcp --dport 443 -j ACCEPT
-
-sudo iptables -t filter -A OUTPUT -p tcp --dport 443 -j ACCEPT
-
-
-
-
-Apagar Caches
+# Clear Cache
 touch /var/ngx_pagespeed_cache/cache.flush
 nginx -V 2>&1 | grep nginx-cache-purge -o
