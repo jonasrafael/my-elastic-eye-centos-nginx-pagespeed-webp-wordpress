@@ -181,3 +181,11 @@ nginx -V 2>&1 | grep nginx-cache-purge -o
 - https://www.liquidweb.com/kb/update-mariadb-from-10-0-to-10-3-on-centos-7/
 - https://www.prado.lt/5-minute-upgrade-nginx-1-12-to-1-17-on-centos-7-rhel-7
 - https://www.mynotepaper.com/install-latest-php-php-fpm-on-centos-7/
+
+# Maybe is good to u
+Remove annoying OS X DS_Store folders
+
+
+find . -name .DS_Store -exec rm {} \;
+
+
