@@ -6,6 +6,10 @@ Testing and compatibility This has been thoroughly tested with the Nginx 1.19 st
 - Vm Instance
 - Centos 7
 - Time!!!
+- Mlocate
+- Nano
+- Wget
+- Time!!
 
 
 # How to Start
@@ -121,6 +125,7 @@ yum install php-soap
 # Wp-Rocket NGinx
 - https://github.com/SatelliteWP/rocket-nginx
 sudo nano /etc/nginx/nginx.conf
+
     client_max_body_size 100M;
 
 * sudo yum install libwebp-tools
@@ -145,8 +150,11 @@ yum install php-pecl-zip
 sudo yum install fail2ban
 
 iptables -A INPUT –p tcp –m state --state NEW –j DROP
+
 iptables -A INPUT -p tcp -m state --state NEW -m limit --limit 2/second --limit-burst 2 -j ACCEPT
+
 iptables -A INPUT -p icmp -m limit --limit 2/second --limit-burst 2 -j ACCEPT
+
 iptables -A INPUT -p tcp --tcp-flags ALL FIN,PSH,URG -j DROP
 
 
