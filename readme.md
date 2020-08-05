@@ -183,3 +183,38 @@ nginx -V 2>&1 | grep nginx-cache-purge -o
 
 ## In progress
 Still working on nailing down logging, rate limiting, and a few other settings. Feel free to leave tips, suggestions, and pull requests.
+
+
+sudo yum install fail2ban
+
+
+[root@srv 04]# iptables -A INPUT –p tcp –m state --state NEW –j DROP
+[root@srv 04]# iptables -A INPUT -p tcp -m state --state NEW -m limit --limit 2/second --limit-burst 2 -j ACCEPT
+[root@srv 04]# iptables -A INPUT -p icmp -m limit --limit 2/second --limit-burst 2 -j ACCEPT
+[root@srv 04]# iptables -A INPUT -p tcp --tcp-flags ALL FIN,PSH,URG -j DROP
+
+
+Avançado:
+https://linoxide.com/linux-how-to/install-logrotate-configure-nginx-log-rotation/
+Log rotation
+https://www.obstance.com/web/using-logrotate-to-rotate-php5-fpm-logs
+
+
+
+Leer
+https://iserversupport.com/how-to-install-nginx-php-fpm-mysql-with-pagespeed-and-memcached-for-high-performance/?__cf_chl_jschl_tk__=d7c28cfbdbcf62c70b33d1876ba2b3407378c89b-1596567116-0-ATEiaiVFy4HVJBCVg4UHPK2B7nI-dQ2sYedRMEdn3rBwngNc5JVxdLOUAB_WgNRlb0vhruPIyxDBwFQeEjkA_GDW64HZUfeVIsnEIEfNatVvgzfSsu8n62GGK2CJrtCazDNh37BH55hMR4JBr6HTnn7x9kHlkLw9dhVa5DtTsM-aL7Dm5F0kXACxOaYRI8OAAuprnyjjTZMwRuH0eu5abADq90rkjTXoEIq_U4IoqJZrYeEcAQC1qYddPrk4c5Wg_F9T-wOha2pS-PEkM3hdC6zDzCjWfDS5idRQB6kk2yhjhX2Kuznzwv6lX6lz12-GBr-UdOY1X-m52kWYsND3Y9yieGXzC8jgXva6_oIRylIqa60JHqrJ2U-i_QPx3CwZQ8a4hVKPFgwoy9HM8BGn-Jg
+
+
+
+wordfence
+* 
+sudo iptables -t filter -A INPUT -p tcp --dport 443 -j ACCEPT
+
+sudo iptables -t filter -A OUTPUT -p tcp --dport 443 -j ACCEPT
+
+
+
+
+Apagar Caches
+touch /var/ngx_pagespeed_cache/cache.flush
+nginx -V 2>&1 | grep nginx-cache-purge -o
