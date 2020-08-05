@@ -21,21 +21,23 @@ yum clean all
 yum install nano wget mlocate
 
 # Acecept your SSH
-#Find the PasswordAuthentication
+Find the PasswordAuthentication
 
 /etc/ssh/sshd_config
 sudo service sshd restart
 
 cd /tmp
 
-#Install the Epel repository. yum install epel-release
-#Install the Remi repository.
+# Install the Epel repository
+yum install epel-release
+
+# Install the Remi repository.
 wget http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
 
 sudo rpm -Uvh remi-release-7*.rpm
 
-
-#https://www.virtualmin.com/download.html
+# Install Virtual Min
+https://www.virtualmin.com/download.html
 wget http://software.virtualmin.com/gpl/scripts/install.sh
 
 sh ./install.sh -n srv.jonasrafael.com -m -b LEMP
@@ -59,26 +61,29 @@ gpgcheck=1
 sudo yum install gcc-c++ pcre-devel zlib-devel make unzip libuuid-devel
 yum install redhat-rpm-config make openssl-devel libxml2-devel libxslt-devel gd-devel perl-ExtUtils-Embed GeoIP-devel gperftools-devel
 
-bash <(curl -f -L -sS https://ngxpagespeed.com/install) \
-     --nginx-version latest
 
-[root@srv tmp]# bash <(curl -f -L -sS https://ngxpagespeed.com/install) -n 1.13.2 -v 1.13.35.2-stable -m
+# Install latest Nginx with Latest Pagespeed
+bash <(curl -f -L -sS https://ngxpagespeed.com/install)
+     --nginx-version latest -m
 
-#Still Install
+Or another version;
+bash <(curl -f -L -sS https://ngxpagespeed.com/install) -n 1.13.2 -v 1.13.35.2-stable -m
+
+# Still Install
 
 yum install redhat-rpm-config make openssl-devel libxml2-devel libxslt-devel gd-devel perl-ExtUtils-Embed GeoIP-devel gperftools-devel
 
-#And Now, the PageSpeed Mod
-#https://www.modpagespeed.com/doc/build_ngx_pagespeed_from_source
+# And Now, the PageSpeed Mod
+https://www.modpagespeed.com/doc/build_ngx_pagespeed_from_source
 bash <(curl -f -L -sS https://ngxpagespeed.com/install)  -n 1.19.1 -v 1.13.35.2 -m
 
 
-#Good To Read
+# Good To Read
 - https://www.liquidweb.com/kb/update-mariadb-from-10-0-to-10-3-on-centos-7/
 - https://www.prado.lt/5-minute-upgrade-nginx-1-12-to-1-17-on-centos-7-rhel-7
 - https://www.mynotepaper.com/install-latest-php-php-fpm-on-centos-7/
 
-#Ex My Configuration Files
+# Ex My Configuration Files
 configure arguments: --prefix=/etc/nginx --sbin-path=/usr/sbin/nginx --modules-path=/usr/lib64/nginx/modules --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --pid-path=/var/run/nginx.pid --lock-path=/var/run/nginx.lock --http-client-body-temp-path=/var/cache/nginx/client_temp --http-proxy-temp-path=/var/cache/nginx/proxy_temp --http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp --http-scgi-temp-path=/var/cache/nginx/scgi_temp --user=nginx --group=nginx --with-compat --with-file-aio --with-threads --with-http_addition_module --with-http_auth_request_module --with-http_dav_module --with-http_flv_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_mp4_module --with-http_random_index_module --with-http_realip_module --with-http_secure_link_module --with-http_slice_module --with-http_ssl_module --with-http_stub_status_module --with-http_sub_module --with-http_v2_module --with-mail --with-mail_ssl_module --with-stream --with-stream_realip_module --with-stream_ssl_module --with-stream_ssl_preread_module --with-cc-opt='-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic -fPIC' --with-ld-opt='-Wl,-z,relro -Wl,-z,now -pie'
 
 
